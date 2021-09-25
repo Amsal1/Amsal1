@@ -21,8 +21,9 @@
 ## :email: Find me on:  
 <p align="left">
 <a href="https://linkedin.com/in/amsal-khan" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="amsal-khan" height="30" width="40" /></a>
-<a href="https://instagram.com/amsalkhan" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="amsalkhan" height="30" width="40" /></a>
+<a href="https://forum.xda-developers.com/m/amsal1.7050192/" target="blank"><img align="center" src="https://github.com/antonialoytorrens/xda-icon-svg/blob/master/xda.svg" alt="amsalkhan" height="30" width="40" /></a>
 <a href="https://stackoverflow.com/users/9513172/amsal-khan" target="blank"><img align="center" src="https://github.com/StackExchange/Stacks-Icons/blob/production/src/Icon/LogoGlyph.svg" alt="amsal-khan" height="30" width="40" /></a>
+<a href="https://instagram.com/amsalkhan" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="amsalkhan" height="30" width="40" /></a>
 <a href="https://facebook.com/md.amsalkhan" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="md.amsalkhan" height="30" width="40" /></a>
 </p>
 
