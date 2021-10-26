@@ -34,11 +34,11 @@
 
 ## :trophy: My Stats:
 <p align="center">
-  <img height="150" width="175" src="https://github.com/JayantGoel001/JayantGoel001/blob/master/PNG/left.png">
+  <img height="150" width="150" src="https://github.com/JayantGoel001/JayantGoel001/blob/master/PNG/left.png">
   <a href="https://github-readme-streak-stats.herokuapp.com/?user=Amsal1&theme=dracula&hide_border=true">
     <img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=Amsal1&theme=dracula&hide_border=true" alt="Amsal1" />
   </a>
-  <img height="150" width="175" src="https://github.com/JayantGoel001/JayantGoel001/blob/master/PNG/right.png">
+  <img height="150" width="150" src="https://github.com/JayantGoel001/JayantGoel001/blob/master/PNG/right.png">
   
   <a href="https://github.com/Amsal1">
     <img src="https://github-profile-trophy.vercel.app/?username=Amsal1&column=7&theme=dracula&no-bg=true&no-frame=true" alt="Amsal1" />
