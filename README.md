@@ -2,7 +2,7 @@
 
 [comment]: [![spotify-github-profile](https://spotify-github-profile.vercel.app/api/view?uid=61w55pkx8nc9jj2gbjruczhki&cover_image=false&theme=default&bar_color_cover=true)](https://spotify-github-profile.vercel.app/api/view?uid=61w55pkx8nc9jj2gbjruczhki&redirect=true)
 
-## 🎓 I'm a B.Tech student at the Integral University | ![](https://komarev.com/ghpvc/?username=Amsal1&label=Profile%20views&color=0e75b6&style=flat)
+## 🎓 Just a fellow engineer | ![](https://komarev.com/ghpvc/?username=Amsal1&label=Profile%20views&color=0e75b6&style=flat)
 <img align="right" alt="GIF" src="https://github.com/Gapur/Gapur/blob/master/coding.gif?raw=true" width="385" height="290" />
 
 - 🔭  I am currently working with Android Custom ROMs
