@@ -1,0 +1,120 @@
+# Generates every README card INSIDE this repo and commits the SVGs to profile/.
+#
+# Why: the shared public instances of these widgets break regularly
+# (github-readme-stats -> HTTP 503 rate limiting, github-profile-trophy and
+# github-readme-activity-graph -> HTTP 402 Payment Required once the owner's
+# Vercel quota is exhausted). Rendering here means the README only ever loads
+# images from this repository, so it can never go blank because of someone
+# else's hosting bill.
+#
+# Cards are produced by github-readme-stats-action, which wraps
+# stats-organization/github-stats-extended, the maintained successor to the
+# deprecated anuraghazra/github-readme-stats.
+#
+# ── OPTIONAL SECRETS ────────────────────────────────────────────────────────
+#   STATS_TOKEN       PAT on THIS account (Amsal1) with `repo` + `read:user`.
+#                     Without it the cards fall back to GITHUB_TOKEN, which
+#                     cannot see private contributions, so count_private is a
+#                     no-op. Add it to make private work count.
+#   WORK_STATS_TOKEN  PAT on the secondary work account. Together with the
+#                     WORK_USERNAME repo variable this enables the optional
+#                     work-activity cards. Both are read from settings rather
+#                     than hardcoded, so the work handle never appears in this
+#                     public source tree.
+#
+#                     Weigh the risk before enabling: a repo-scoped PAT stored
+#                     in a public personal repo can read private work source,
+#                     and the generated cards expose language mix and commit
+#                     volume. Prefer a fine-grained read-only token with a
+#                     short expiry, and check org PAT policy first.
+# ────────────────────────────────────────────────────────────────────────────
+
+name: Update README cards
+
+on:
+  schedule:
+    # 01:00 WIB (18:00 UTC) daily
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/readme-cards.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: readme-cards
+  cancel-in-progress: true
+
+jobs:
+  cards:
+    name: Render and commit cards
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      # ── Public identity: Amsal1 ────────────────────────────────────────────
+      - name: Stats card
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: stats
+          path: profile/stats.svg
+          options: >-
+            username=Amsal1&show_icons=true&count_private=true&include_all_commits=true&rank_icon=github&theme=dracula&hide_border=true&bg_color=00000000&title_color=4478e3&icon_color=4478e3
+          token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Top languages card
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: top-langs
+          path: profile/top-langs.svg
+          options: >-
+            username=Amsal1&layout=compact&langs_count=10&count_private=true&hide=perl&theme=dracula&hide_border=true&bg_color=00000000&title_color=4478e3
+          token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
+
+      # ── Optional: secondary private-work account ───────────────────────────
+      # Off by default. Skipped unless BOTH the WORK_USERNAME repo variable and
+      # the WORK_STATS_TOKEN secret are set, so the workflow stays green and no
+      # work identity is committed to this repo.
+      #
+      # To surface these, add both settings and embed in the README:
+      #   ![Work](./profile/work-stats.svg)
+      - name: Work activity card
+        if: ${{ vars.WORK_USERNAME != '' && secrets.WORK_STATS_TOKEN != '' }}
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: stats
+          path: profile/work-stats.svg
+          options: >-
+            username=${{ vars.WORK_USERNAME }}&show_icons=true&count_private=true&include_all_commits=true&hide=stars,issues&hide_rank=true&custom_title=Private%20Work%20Activity&theme=dracula&hide_border=true&bg_color=00000000&title_color=2f855a&icon_color=2f855a
+          token: ${{ secrets.WORK_STATS_TOKEN }}
+
+      - name: Work languages card
+        if: ${{ vars.WORK_USERNAME != '' && secrets.WORK_STATS_TOKEN != '' }}
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: top-langs
+          path: profile/work-top-langs.svg
+          options: >-
+            username=${{ vars.WORK_USERNAME }}&layout=compact&langs_count=10&count_private=true&custom_title=Languages%20I%20Ship%20Daily&theme=dracula&hide_border=true&bg_color=00000000&title_color=2f855a
+          token: ${{ secrets.WORK_STATS_TOKEN }}
+
+      # ── Contribution snake (replaces the dead activity graph) ──────────────
+      - name: Contribution snake
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: Amsal1
+          outputs: |
+            profile/snake.svg?palette=github-dark
+
+      - name: Commit cards
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add profile/
+          git diff --staged --quiet && echo "No card changes." && exit 0
+          git commit -m "chore(profile): refresh README cards"
+          git push

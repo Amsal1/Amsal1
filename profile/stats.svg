@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img" aria-label="GitHub stats card pending generation">
+  <style>
+    .t { font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: #4478e3; }
+    .s { font: 400 14px 'Segoe UI', Ubuntu, Sans-Serif; fill: #a9b1d6; }
+    .m { font: 400 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #6272a4; }
+  </style>
+  <rect x="0.5" y="0.5" width="494" height="194" rx="10" fill="none" stroke="#6272a4" stroke-opacity="0.35"/>
+  <text x="28" y="44" class="t">Amsal1 · GitHub Stats</text>
+  <text x="28" y="86" class="s">Card is generated in-repo by GitHub Actions.</text>
+  <text x="28" y="110" class="s">Run the “Update README cards” workflow to populate it.</text>
+  <text x="28" y="156" class="m">Actions → Update README cards → Run workflow</text>
+</svg>
