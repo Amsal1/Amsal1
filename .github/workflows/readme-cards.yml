@@ -13,14 +13,27 @@
 #
 # ── OPTIONAL SECRETS ────────────────────────────────────────────────────────
 #   STATS_TOKEN       PAT on THIS account (Amsal1) with `repo` + `read:user`.
-#                     Without it the cards fall back to GITHUB_TOKEN, which
-#                     cannot see private contributions, so count_private is a
-#                     no-op. Add it to make private work count.
+#                     Widens what the cards can see: private repo languages and
+#                     private commits in the REST commit search. Falls back to
+#                     GITHUB_TOKEN, which is scoped to this repo only.
+#
+#                     NOTE: there is no `count_private` option in this fork.
+#                     Private visibility is governed by (a) the token's scopes
+#                     and (b) the account's "Include private contributions on
+#                     my profile" setting. The `show=contributions` row below
+#                     reads the contribution calendar, which honours (b).
 #   WORK_STATS_TOKEN  PAT on the secondary work account. Together with the
 #                     WORK_USERNAME repo variable this enables the optional
 #                     work-activity cards. Both are read from settings rather
 #                     than hardcoded, so the work handle never appears in this
 #                     public source tree.
+#
+#                     Needs `repo` + `read:user` + `read:org`. The org scope
+#                     matters: the work cards pass
+#                     role=owner,collaborator,organization_member, without
+#                     which GitHub only returns repos the account OWNS — and
+#                     an account whose work lives in an org owns none, which
+#                     is why the languages card rendered "No languages data".
 #
 #                     Weigh the risk before enabling: a repo-scoped PAT stored
 #                     in a public personal repo can read private work source,
@@ -69,7 +82,7 @@ jobs:
           card: stats
           path: profile/stats.svg
           options: >-
-            username=Amsal1&show_icons=true&count_private=true&include_all_commits=true&rank_icon=github&theme=dracula&hide_border=true&bg_color=00000000&title_color=4478e3&icon_color=4478e3
+            username=Amsal1&show_icons=true&include_all_commits=true&show=contributions&rank_icon=github&theme=dracula&hide_border=true&bg_color=00000000&title_color=4478e3&icon_color=4478e3
           token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Top languages card
@@ -78,7 +91,7 @@ jobs:
           card: top-langs
           path: profile/top-langs.svg
           options: >-
-            username=Amsal1&layout=compact&langs_count=10&count_private=true&hide=perl&theme=dracula&hide_border=true&bg_color=00000000&title_color=4478e3
+            username=Amsal1&layout=compact&langs_count=10&hide=perl&theme=dracula&hide_border=true&bg_color=00000000&title_color=4478e3
           token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
 
       # ── Optional: secondary private-work account ───────────────────────────
@@ -95,7 +108,7 @@ jobs:
           card: stats
           path: profile/work-stats.svg
           options: >-
-            username=${{ vars.WORK_USERNAME }}&show_icons=true&count_private=true&include_all_commits=true&hide=stars,issues&hide_rank=true&custom_title=Private%20Work%20Activity&theme=dracula&hide_border=true&bg_color=00000000&title_color=2f855a&icon_color=2f855a
+            username=${{ vars.WORK_USERNAME }}&show_icons=true&include_all_commits=true&show=contributions&role=owner,collaborator,organization_member&hide=stars,issues&hide_rank=true&custom_title=Private%20Work%20Activity&theme=dracula&hide_border=true&bg_color=00000000&title_color=2f855a&icon_color=2f855a
           token: ${{ secrets.WORK_STATS_TOKEN }}
 
       - name: Work languages card
@@ -105,7 +118,7 @@ jobs:
           card: top-langs
           path: profile/work-top-langs.svg
           options: >-
-            username=${{ vars.WORK_USERNAME }}&layout=compact&langs_count=10&count_private=true&custom_title=Languages%20I%20Ship%20Daily&theme=dracula&hide_border=true&bg_color=00000000&title_color=2f855a
+            username=${{ vars.WORK_USERNAME }}&layout=compact&langs_count=10&role=owner,collaborator,organization_member&custom_title=Languages%20I%20Ship%20Daily&theme=dracula&hide_border=true&bg_color=00000000&title_color=2f855a
           token: ${{ secrets.WORK_STATS_TOKEN }}
 
       # ── Contribution snake (replaces the dead activity graph) ──────────────

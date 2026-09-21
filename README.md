@@ -254,12 +254,12 @@ Selected personal projects:
 
 <div align="center">
 
-<img height="180" src="./profile/stats.svg" alt="GitHub stats"/>
-<img height="180" src="./profile/top-langs.svg" alt="Most used languages"/>
+<img height="180" src="https://raw.githubusercontent.com/Amsal1/Amsal1/master/profile/stats.svg" alt="GitHub stats"/>
+<img height="180" src="https://raw.githubusercontent.com/Amsal1/Amsal1/master/profile/top-langs.svg" alt="Most used languages"/>
 
 <img src="https://streak-stats.demolab.com?user=Amsal1&theme=dracula&hide_border=true&background=00000000" alt="Contribution streak"/>
 
-<img src="./profile/snake.svg" alt="Contribution snake"/>
+<img src="https://raw.githubusercontent.com/Amsal1/Amsal1/master/profile/snake.svg" alt="Contribution snake"/>
 
 </div>
 
