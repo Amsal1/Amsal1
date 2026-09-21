@@ -53,6 +53,12 @@ jobs:
     name: Render and commit cards
     runs-on: ubuntu-latest
 
+    # The `secrets` context is NOT available in any `if:` condition, so the
+    # optional token is surfaced as an env var here (job-level `env` does allow
+    # `secrets`) and the steps below gate on `env.HAS_WORK_TOKEN` instead.
+    env:
+      HAS_WORK_TOKEN: ${{ secrets.WORK_STATS_TOKEN }}
+
     steps:
       - uses: actions/checkout@v6
 
@@ -83,7 +89,7 @@ jobs:
       # To surface these, add both settings and embed in the README:
       #   ![Work](./profile/work-stats.svg)
       - name: Work activity card
-        if: ${{ vars.WORK_USERNAME != '' && secrets.WORK_STATS_TOKEN != '' }}
+        if: ${{ vars.WORK_USERNAME != '' && env.HAS_WORK_TOKEN != '' }}
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: stats
@@ -93,7 +99,7 @@ jobs:
           token: ${{ secrets.WORK_STATS_TOKEN }}
 
       - name: Work languages card
-        if: ${{ vars.WORK_USERNAME != '' && secrets.WORK_STATS_TOKEN != '' }}
+        if: ${{ vars.WORK_USERNAME != '' && env.HAS_WORK_TOKEN != '' }}
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: top-langs
