@@ -111,21 +111,40 @@ jobs:
             username=${{ vars.WORK_USERNAME }}&show_icons=true&include_all_commits=true&show=contributions&role=owner,collaborator,organization_member&hide=stars,issues&hide_rank=true&custom_title=Private%20Work%20Activity&theme=dracula&hide_border=true&bg_color=00000000&title_color=2f855a&icon_color=2f855a
           token: ${{ secrets.WORK_STATS_TOKEN }}
 
-      - name: Work languages card
-        if: ${{ vars.WORK_USERNAME != '' && env.HAS_WORK_TOKEN != '' }}
-        uses: stats-organization/github-readme-stats-action@v2
-        with:
-          card: top-langs
-          path: profile/work-top-langs.svg
-          options: >-
-            username=${{ vars.WORK_USERNAME }}&layout=compact&langs_count=10&role=owner,collaborator,organization_member&custom_title=Languages%20I%20Ship%20Daily&theme=dracula&hide_border=true&bg_color=00000000&title_color=2f855a
-          token: ${{ secrets.WORK_STATS_TOKEN }}
+      # NOTE: there is deliberately no work *languages* card.
+      #
+      # Every language card of this family (github-stats-extended, upstream
+      # github-readme-stats) reads `repository.languages` from the GraphQL API.
+      # That is Linguist's byte count over the WHOLE repository — the same bar
+      # shown on a repo's homepage. It carries no per-author attribution, so it
+      # reports the employer's codebase, not what any one engineer wrote. No
+      # option changes that; `role` only widens WHICH repos are counted.
+      #
+      # Author-attributed language stats do exist (lowlighter/metrics with
+      # plugin_languages_indepth + commits_authoring, which matches both
+      # `git log --author` and `git log --grep` for Co-authored-by trailers),
+      # but that algorithm CLONES each repository onto the Actions runner to
+      # run linguist over your patches. Its own docs advise against enabling it
+      # for company code. Cloning private payments repos onto a runner driven
+      # by a public personal repo is not a trade worth making.
+      #
+      # For per-author language data, use WakaTime instead: it measures editor
+      # time locally and never needs repository access.
 
       # ── Contribution snake (replaces the dead activity graph) ──────────────
+      # snk takes a single github_user_name, so two calendars cannot be merged
+      # into one animation. It is pointed at the work account when configured,
+      # since that is where the real activity is, and falls back to this one.
+      #
+      # github_token defaults to the action token, which can only see public
+      # contributions; passing the work PAT lets it read that account's private
+      # contribution calendar. The rendered SVG is only coloured cells, so no
+      # username or repo detail ends up in the output.
       - name: Contribution snake
         uses: Platane/snk/svg-only@v3
         with:
-          github_user_name: Amsal1
+          github_user_name: ${{ vars.WORK_USERNAME || github.repository_owner }}
+          github_token: ${{ secrets.WORK_STATS_TOKEN || github.token }}
           outputs: |
             profile/snake.svg?palette=github-dark
 

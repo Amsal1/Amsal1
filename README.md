@@ -249,15 +249,15 @@ Selected personal projects:
 
 ## 📈 GitHub Activity
 
-> 🔒 Most of my day-to-day engineering ships from a separate **private work account**, so the
-> graph below understates it. These cards are generated in-repo and include private contributions.
+> 🔒 Most of my day-to-day engineering ships from a separate **private work account**. The first
+> card aggregates that output — commit and PR volume only, no repository or project detail.
 
 <div align="center">
 
-<img height="180" src="https://raw.githubusercontent.com/Amsal1/Amsal1/master/profile/stats.svg" alt="GitHub stats"/>
-<img height="180" src="https://raw.githubusercontent.com/Amsal1/Amsal1/master/profile/top-langs.svg" alt="Most used languages"/>
+<img height="175" src="https://raw.githubusercontent.com/Amsal1/Amsal1/master/profile/work-stats.svg" alt="Private work activity"/>
 
-<img src="https://streak-stats.demolab.com?user=Amsal1&theme=dracula&hide_border=true&background=00000000" alt="Contribution streak"/>
+<img height="175" src="https://raw.githubusercontent.com/Amsal1/Amsal1/master/profile/stats.svg" alt="Public GitHub stats"/>
+<img height="175" src="https://raw.githubusercontent.com/Amsal1/Amsal1/master/profile/top-langs.svg" alt="Most used languages in public repos"/>
 
 <img src="https://raw.githubusercontent.com/Amsal1/Amsal1/master/profile/snake.svg" alt="Contribution snake"/>
 
